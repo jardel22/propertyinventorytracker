@@ -22,3 +22,4 @@ Route::get('/statements', 'PagesController@statements');
 
 Route::get('/contact', 'PagesController@contact');
 
+Route::resource ('bookings', 'BookingsController');
