@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.userapp')
 
 @section('content')
 <div class="container">
@@ -8,7 +8,8 @@
                 <div class="card-header">USER Dashboard</div>
 
                 <div class="card-body">
-                    You are logged in as <strong>USER</strong>!
+                    @component('components.who')
+                    @endcomponent
                 </div>
             </div>
         </div>

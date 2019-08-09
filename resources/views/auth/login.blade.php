@@ -1,11 +1,11 @@
-@extends('layouts.app')
+@extends('layouts.userapp')
 
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Login') }}</div>
+                <div class="card-header"><strong>USER</strong> Login</div>
 
                 <div class="card-body">
                     <form method="POST" action="{{ route('login') }}">
@@ -62,6 +62,9 @@
                                         {{ __('Forgot Your Password?') }}
                                     </a>
                                 @endif
+                                <br><br>
+                                <a href="{{ route('clerk.login')}}" class="btn btn-link">
+                                    {{__('Login as a Clerk')}}</a> 
                             </div>
                         </div>
                     </form>

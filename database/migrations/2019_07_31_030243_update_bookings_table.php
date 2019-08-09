@@ -15,8 +15,9 @@ class UpdateBookingsTable extends Migration
     {
         //update existing booking table
         Schema::table('bookings', function (Blueprint $table){
-            $table->integer('user_id')->unsigned();
-            $table->integer('property_id')->unsigned();
+            $table->bigInteger('user_id')->unsigned();
+            $table->bigInteger('property_id')->unsigned();
+            $table->string('status')->default('Requested');
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('property_id')->references('id')->on('properties');
         });

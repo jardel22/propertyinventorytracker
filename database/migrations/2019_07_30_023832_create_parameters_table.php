@@ -14,9 +14,10 @@ class CreateParametersTable extends Migration
     public function up()
     {
         Schema::create('parameters', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->string('bedrooms');
             $table->string('garage');
+            $table->string('furnished');
             $table->string('gasMeterLocation');
             $table->string('electricityMeterLocation');
             $table->string('waterMeterLocation');

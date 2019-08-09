@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.adminapp')
 
 @section('content')
 <div class="container">
@@ -8,13 +8,8 @@
                 <div class="card-header">ADMIN Dashboard</div>
 
                 <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
-                    You are logged in as <strong>ADMIN</strong>!
+                    @component('components.who')
+                    @endcomponent
                 </div>
             </div>
         </div>

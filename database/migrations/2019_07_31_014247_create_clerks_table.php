@@ -14,7 +14,7 @@ class CreateClerksTable extends Migration
     public function up()
     {
         Schema::create('clerks', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->string('firstname');
             $table->string('lastname');
             $table->string('email')->unique();

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class UpdatePropertiesTable extends Migration
+class UpdateParametersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -15,9 +15,9 @@ class UpdatePropertiesTable extends Migration
     {
         //update the properties table
         //update existing booking table
-        Schema::table('properties', function (Blueprint $table){
-            $table->integer('parameter_id')->unsigned();
-            $table->foreign('parameter_id')->references('id')->on('parameters');
+        Schema::table('parameters', function (Blueprint $table){
+            $table->bigInteger('property_id')->unsigned();
+            $table->foreign('property_id')->references('id')->on('properties');
         });
     }
 
@@ -30,7 +30,7 @@ class UpdatePropertiesTable extends Migration
     {
         //
         Schema::table('parameters', function (Blueprint $table){
-            $table->dropForeign('parameter_id')->references('id')->on('parameters');
+            $table->dropForeign('property_id');
         });
     }
 }
