@@ -5,10 +5,33 @@
     <div class="card">
         <div class="card-header">Create a Booking</div>
     </div>
-    
+
+        
 
     <br>
     {!! Form::open(['action' => 'ClerkBookingsController@store', 'method' => 'POST']) !!}
+        
+        <div class="form-group">
+        <label for="clientId"><strong>Assign a Clerk to the Booking</strong></label>
+        <select name="clientId" id="clientId" class="form-control" title="Assign a Clerk to the Booking">
+         
+            @foreach ($clientname_array as $data)
+            <option value="{{$data->clientId}}" style="text-transform:capitalize">
+            {{$data->clientFirstname}} {{$data->clientLastname}}
+            </option>
+            @endforeach
+
+        </select>
+        </div>
+
+        <div class="form-group">
+            {{Form::label('jobType', 'What Services Do You Require?')}}
+            {{Form::select('jobType', array(
+                'Inventory Check' => 'Inventory Check',
+                'Check Out' => 'Check Out',
+                'Interim' => 'Interim',
+                'Update' => 'Update'),'', ['class' => 'form-control'] )}}
+        </div>
         
         <div class="form-group">
             {{Form::label('date', 'What date would you like to book?')}} <br>
@@ -28,6 +51,11 @@
         <div class="form-group">
             {{Form::label('city', 'Please enter the city of the property')}}
             {{Form::text('city', '', ['class'=>'form-control', 'placeholder' => 'City'])}}
+        </div>
+
+        <div class="form-group">
+            {{Form::label('county', 'Please enter the county of the property')}}
+            {{Form::text('county', '', ['class'=>'form-control', 'placeholder' => 'County'])}}
         </div>
 
         <div class="form-group">

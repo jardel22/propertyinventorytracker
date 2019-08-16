@@ -10,37 +10,29 @@
                 <table class="table table-striped">
                     <thead>
                         <tr style="text-align:center">
-                            <th>Booking Date</th>
                             <th>Start Time</th>
                             <th>End Time</th>
                             <th>Approved</th>
-                            <th>Confirm</th>
+                            <th>More Info</th>
+                            <th>Update</th>
                         </tr>
                     </thead>
 
                     <tbody>
                     @forelse($bookings as $booking)
                     <tr style="text-align:center">
-                        <td>{{$booking->date}}</td>
                         <td>{{$booking->startTime}}</td>
                         <td>{{$booking->endTime}}</td>
-
-                        <td>
-                            <form method="POST" action="{{route ('clerk.bookings.dashboard.approve') }}" > 
-                           @csrf 
-
-                                <input
-                                    type="checkbox" class="form-control" name="approve"
-                                @if($booking -> approved == 1)
-                                    {{__('checked')}}
-                                @endif>
-
-                                <input type="hidden" name="bookingId" value="{{$booking->id}}">
-                                <input type="hidden" name="status" value="{{$booking->status}}">
-                                <td><input type="submit" name="submit" class="btn btn-primary" value="Done">
-                                </td>
-                            </form>
+                        <td>@if($booking -> approved == 0)
+                                {{__('Booking Not Approved Yet')}}
+                            @endif
+                            @if($booking -> approved == 1)
+                                {{__('Booking Approved')}}
+                            @endif
                         </td>
+                        <td> <a href="bookings/{{$booking->bookingId}}/show" class="btn btn-success btn-sm">View</a></td>
+                        <td> <a href="bookings/{{$booking->bookingId}}/edit" class="btn btn-primary btn-sm">Update</a></td>
+                        
                     </tr>
                     @empty
                     <h4>No Bookings</h4>

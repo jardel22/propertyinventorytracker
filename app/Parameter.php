@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Parameter extends Model
 {
+    protected $primaryKey = 'parameterId';
+
     protected $table = 'parameters';
     protected $fillable = [
         'bedrooms',
@@ -16,7 +18,8 @@ class Parameter extends Model
         'waterMeterLocation',
         'purchaseOrderNumber',
         'specialInstructions',
-        'property_id'
+        'property_id',
+        'comments', //NEW FIELD (FOR LATER STAGE)
     ];
     
     public function property() 

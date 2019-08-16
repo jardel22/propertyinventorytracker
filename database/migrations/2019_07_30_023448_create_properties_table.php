@@ -14,9 +14,10 @@ class CreatePropertiesTable extends Migration
     public function up()
     {
         Schema::create('properties', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->bigIncrements('propertyId');
             $table->string('addressLine1');
             $table->string('city');
+            $table->string('county');
             $table->string('postcode');
             $table->timestamps();
         });

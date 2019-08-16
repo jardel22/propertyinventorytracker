@@ -32,57 +32,74 @@ class BookingsController extends Controller
      */
     public function index()
     {
-        $bookings = Booking::orderBy('created_at', 'desc')->paginate(10);
-        // // $bookings = Booking::orderBy('created_at', 'desc')->get();
-        return view('bookings.user.index')->with('bookings', $bookings);
-        
-    }
-
-    public function dashboard()
-    {
-        $user_id = Auth::user()->id;
-
-
+        $client_id = Auth::user()->clientId;
 
         $bookings = DB::table('bookings')
-        ->join('users', 'bookings.user_id', '=', 'users.id')
-        ->join('properties', 'bookings.property_id', '=', 'properties.id')                
-        ->where('bookings.user_id', '=', $user_id)
+        ->join('clients', 'bookings.client_id', '=', 'clients.clientId')
+        ->join('properties', 'bookings.property_id', '=', 'properties.propertyId')
+        ->join('parameters', 'properties.propertyId', '=', 'parameters.property_id')               
+        ->where('bookings.client_id', '=', $client_id)
         ->get();
         
         //Booking::orderBy('created_at', 'desc')->get();
         return view('bookings.user.dashboard')->with('bookings', $bookings);
+        
     }
+
+    // public function dashboard()
+    // {
+    //     $user_id = Auth::user()->id;
+
+
+
+    //     $bookings = DB::table('bookings')
+    //     ->join('users', 'bookings.user_id', '=', 'users.id')
+    //     ->join('properties', 'bookings.property_id', '=', 'properties.propertyId')
+    //     ->join('parameters', 'properties.propertyId', '=', 'parameters.property_id')                
+    //     ->where('users.id', '=', $user_id)
+    //     ->get();
+        
+    //     //Booking::orderBy('created_at', 'desc')->get();
+    //     return view('bookings.user.dashboard')->with('bookings', $bookings);
+    // }
 
     public function calendar()
     {
-        $bookings = [];
-        $data = DB::table('bookings')
-        ->join('users', 'bookings.user_id', '=', 'users.id')
-        ->join('properties', 'bookings.property_id', '=', 'properties.id')
+        $bookings = DB::table('bookings')
+        ->join('clients', 'bookings.client_id', '=', 'clients.clientId')
+        ->join('properties', 'bookings.property_id', '=', 'properties.propertyId')
+        ->join('parameters', 'properties.propertyId', '=', 'parameters.property_id')
+        ->join('clerks', 'bookings.clerk_id', '=', 'clerks.clerkId')
         ->where('bookings.approved', '=', '1')
         ->get();
 
-        if($data->count())
-        {
-            foreach ($data as $key => $value) 
-            {
-                $bookings[] = Calendar::event(
-                    $value->addressLine1,
-                    false,
-                    new \DateTime($value->startTime),
-                    new \DateTime($value->endTime),
-                    null,
-                    // Add color
-                    [
-                        'color' => '#0073e5',
-                        'textColor' => '#000000',
-                    ]
-                );
-            }
-        }
-        $calendar = Calendar::addEvents($bookings);
-        return view('bookings.user.calendar', compact ('calendar'));
+        // if($data->count())
+        // {
+        //     foreach ($data as $key => $value) 
+        //     {
+        //         $bookings[] = Calendar::event(
+        //             $value->addressLine1,
+        //             false,
+        //             new \DateTime($value->startTime),
+        //             new \DateTime($value->endTime),
+        //             null,
+        //             // Add color
+        //             [
+        //                 'color' => '#0073e5',
+        //                 'textColor' => '#000000',
+        //             ]
+        //         );
+        //     }
+        // }
+        // $calendar = Calendar::addEvents($bookings);
+        // // ->setOptions([ //set fullcalendar options
+        // //     'firstDay' => 1
+        // // ])->setCallbacks([ //set fullcalendar callback options (will not be JSON encoded)
+        // //     'dayClick' => 'function(bookings) {
+        // //         title = booking.title;
+        // //      }'
+        // // ]); 
+        return view('bookings.user.calendar', compact ('bookings'));
     }
 
     /**
@@ -111,14 +128,16 @@ class BookingsController extends Controller
 
 
 
-        $user_id = Auth::user()->id;
+        $client_id = Auth::user()->clientId;
         DB::beginTransaction();
 
         $this->validate($request, [
+            'jobType' => 'required', //NEW FIELD - done
             'date' => 'required',
             'time' => 'required',
             'addressLine1' => 'required',
             'city' => 'required',
+            'county' => 'required', //NEW FIELD
             'postcode' => 'required',
             'bedrooms' => 'required',
             'garage' => 'required',
@@ -136,7 +155,8 @@ class BookingsController extends Controller
         $property = $this->property->create([
             'addressLine1' => $request->addressLine1,
             'city' => $request->city,
-            'postcode' => $request->postcode
+            'postcode' => $request->postcode,
+            'county' => $request->county
         ]);
 
         $parameter = $this->parameter->create([
@@ -148,7 +168,7 @@ class BookingsController extends Controller
             'waterMeterLocation' => $request->waterMeterLocation,
             'purchaseOrderNumber' => $request->purchaseOrderNumber,
             'specialInstructions' => $request->specialInstructions,
-            'property_id' => $property->id
+            'property_id' => $property->propertyId
         ]);
 
 
@@ -156,8 +176,9 @@ class BookingsController extends Controller
         $booking = $this->booking->create([
             'startTime' => $starttime,
             'endTime' => $endtime,
-            'user_id' => $user_id,
-            'property_id' => $property->id
+            'client_id' => $client_id,
+            'property_id' => $property->propertyId,
+            'jobType' => $request->jobType
         ]);
 
         if($booking && $property && $parameter){
@@ -165,7 +186,7 @@ class BookingsController extends Controller
         } else {
             DB::rollback();
         }
-        return redirect('/bookings/dashboard')->with('success', 'Booking Request Created');
+        return redirect('/bookings')->with('success', 'Booking Requested Successfully');
         }
         catch(Exception $exception){
             DB::rollback();
@@ -173,30 +194,30 @@ class BookingsController extends Controller
         }
     }
 
-    public function approve(Request $req)
-    {
+    // public function approve(Request $req, $bookingId)
+    // {
         
-        $booking = Booking::find($req->bookingId);
-        $approve = $req->approve;
-        $status = $req->status;
+    //     $booking = Booking::find($bookingId);
+    //     $approve = $req->approve;
+    //     $status = $req->status;
 
-        if($approve== 'on'){
-            $approve = 1;
-            $status = "Pending";
+    //     if($approve== 'on'){
+    //         $approve = 1;
+    //         $status = "Pending";
 
-        } 
+    //     } 
         
-        else {
-            $approve=0;
-            $status="Requested";
-        }
+    //     else {
+    //         $approve=0;
+    //         $status="Requested";
+    //     }
 
-        $booking->approved= $approve;
-        $booking->status = $status;
-        $booking->save();       
+    //     $booking->approved= $approve;
+    //     $booking->status = $status;
+    //     $booking->save();       
 
-        return back();
-    }
+    //     return back();
+    // }
 
     /**
      * Display the specified resource.
@@ -204,10 +225,19 @@ class BookingsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($bookingId)
     {
-        // $booking = Booking::find($id);
-        // return view('bookings.user.show')->with('booking', $booking);
+        $client_id = Auth::user()->clientId;
+
+        $book = DB::table('bookings')
+        ->join('clients', 'bookings.client_id', '=', 'clients.clientId')
+        ->join('properties', 'bookings.property_id', '=', 'properties.propertyId')
+        ->join('parameters', 'properties.propertyId', '=', 'parameters.property_id')
+        ->where('bookings.bookingId', '=', $bookingId)
+        ->where('clients.clientId', '=', $client_id)
+        ->get();
+
+        return view('bookings.user.show')->with('bookings', $book);
     }
 
     /**

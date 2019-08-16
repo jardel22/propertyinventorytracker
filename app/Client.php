@@ -6,9 +6,12 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Authenticatable
+class Client extends Authenticatable
 {
     use Notifiable;
+
+    protected $primaryKey = 'clientId';
+    protected $guard = 'web';
 
     /**
      * The attributes that are mass assignable.
@@ -16,7 +19,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'firstname', 'lastname', 'email', 'password',
+        'clientFirstname', 'clientLastname', 'email', 'password',
     ];
 
     /**
@@ -40,5 +43,10 @@ class User extends Authenticatable
     public function bookings()
     {
         return $this->hasMany(Booking::class);
+    }
+
+    public function clerkBookings()
+    {
+        return $this->hasMany(ClerkBooking::class);
     }
 }

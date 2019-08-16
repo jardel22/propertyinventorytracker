@@ -6,10 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Property extends Model
 {
+    protected $primaryKey = 'propertyId';
     protected $table = 'properties';
     protected $fillable = [
         'addressLine1',
         'city',
+        'county',//NEW FIELD
         'postcode'
     ];
 

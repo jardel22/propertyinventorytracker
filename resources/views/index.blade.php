@@ -1,4 +1,4 @@
-@extends('layouts.userapp')
+@extends('layouts.login.userloginapp')
 
 @section('content')
     <div class="jumbotron text-center">

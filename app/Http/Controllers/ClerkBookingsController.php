@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\ClerkBooking;
 use App\Property;
 use App\Parameter;
+use App\Clerk;
 use Auth;
 use DB;
 
@@ -30,22 +31,18 @@ class ClerkBookingsController extends Controller
      */
     public function index()
     {
-        $bookings = ClerkBooking::orderBy('created_at', 'desc')->paginate(10);
-        // // $bookings = Booking::orderBy('created_at', 'desc')->get();
-        return view('bookings.clerk.index')->with('bookings', $bookings);
-        
-    }
+        // $bookings = ClerkBooking::orderBy('created_at', 'desc')->paginate(10);
+        // // // $bookings = Booking::orderBy('created_at', 'desc')->get();
+        // return view('bookings.clerk.index')->with('bookings', $bookings);
 
-    public function dashboard()
-    {
         $bookings = DB::table('bookings')
-        ->join('users', 'bookings.user_id', '=', 'users.id')
-        ->join('properties', 'bookings.property_id', '=', 'properties.id')
-        ->orderBy('bookings.created_at', 'desc')
-        ->get();
+        ->join('clients', 'bookings.client_id', '=', 'clients.clientId')
+        ->join('properties', 'bookings.property_id', '=', 'properties.propertyId')
+        ->orderBy('bookings.starttime', 'desc')
+        ->paginate(10);
         
+        //Booking::orderBy('created_at', 'desc')->get();
         return view('bookings.clerk.dashboard')->with('bookings', $bookings);
-
         
     }
 
@@ -68,8 +65,14 @@ class ClerkBookingsController extends Controller
     public function store(Request $request)
     {
 
+        $starttime = $request->date.' '.$request->time;
+        $endtime = date('Y:m:d H:i:s', strtotime($starttime)+7200);
+        echo $endtime;
 
-        $user_id = Auth::user()->id;
+
+
+
+        $client_id = Auth::user()->clientId;
         DB::beginTransaction();
 
         $this->validate($request, [
@@ -77,6 +80,7 @@ class ClerkBookingsController extends Controller
             'time' => 'required',
             'addressLine1' => 'required',
             'city' => 'required',
+            'county' => 'required', //NEW FIELD
             'postcode' => 'required',
             'bedrooms' => 'required',
             'garage' => 'required',
@@ -94,7 +98,8 @@ class ClerkBookingsController extends Controller
         $property = $this->property->create([
             'addressLine1' => $request->addressLine1,
             'city' => $request->city,
-            'postcode' => $request->postcode
+            'postcode' => $request->postcode,
+            'county' => $request->county
         ]);
 
         $parameter = $this->parameter->create([
@@ -106,15 +111,17 @@ class ClerkBookingsController extends Controller
             'waterMeterLocation' => $request->waterMeterLocation,
             'purchaseOrderNumber' => $request->purchaseOrderNumber,
             'specialInstructions' => $request->specialInstructions,
-            'property_id' => $property->id
+            'property_id' => $property->propertyId
         ]);
 
+
+
         $booking = $this->booking->create([
-            'date' => $request->date,
-            'startTime' => $request->time,
-            'endTime' => $request->time,
-            'user_id' => $user_id,
-            'property_id' => $property->id
+            'startTime' => $starttime,
+            'endTime' => $endtime,
+            'client_id' => $request->clientId,
+            'property_id' => $property->propertyId,
+            'jobType' => $request->jobType
         ]);
 
         if($booking && $property && $parameter){
@@ -122,37 +129,12 @@ class ClerkBookingsController extends Controller
         } else {
             DB::rollback();
         }
-        return redirect('/bookings/dashboard')->with('success', 'Booking Request Created');
+        return redirect('/clerk/bookings')->with('success', 'Booking Added Successfully');
         }
         catch(Exception $exception){
             DB::rollback();
             return redirect()->back();
         }
-    }
-
-    public function approve(Request $req)
-    {
-        
-        $booking = ClerkBooking::find($req->bookingId);
-        $approve = $req->approve;
-        $status = $req->status;
-
-        if($approve== 'on'){
-            $approve = 1;
-            $status = "Pending";
-
-        } 
-        
-        else {
-            $approve=0;
-            $status="Requested";
-        }
-
-        $booking->approved= $approve;
-        $booking->status = $status;
-        $booking->save();       
-
-        return back();
     }
 
     /**
@@ -161,10 +143,30 @@ class ClerkBookingsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($bookingId)
     {
-        // $booking = Booking::find($id);
-        // return view('bookings.user.show')->with('booking', $booking);
+        $booking = DB::table('bookings')
+        ->join('clients', 'bookings.client_id', '=', 'clients.clientId')
+        ->join('properties', 'bookings.property_id', '=', 'properties.propertyId')
+        ->join('parameters', 'properties.propertyId', '=', 'parameters.property_id')
+        ->where('bookings.bookingId', '=', $bookingId)
+        ->get();
+
+        return view('bookings.clerk.show')->with('bookings', $booking);
+    }
+
+    public function calendar()
+    {
+        $bookings = DB::table('bookings')
+        ->join('clients', 'bookings.client_id', '=', 'clients.clientId')
+        ->join('properties', 'bookings.property_id', '=', 'properties.propertyId')
+        ->join('parameters', 'properties.propertyId', '=', 'parameters.property_id')
+        ->join('clerks', 'bookings.clerk_id', '=', 'clerks.clerkId')
+        ->where('bookings.approved', '=', '1')
+        ->get();
+
+        
+        return view('bookings.clerk.calendar', compact ('bookings'));
     }
 
     /**
@@ -173,9 +175,17 @@ class ClerkBookingsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($bookingId)
     {
-        //
+        $booking = DB::table('bookings')
+        ->join('clients', 'bookings.client_id', '=', 'clients.clientId')
+        ->join('properties', 'bookings.property_id', '=', 'properties.propertyId')
+        ->join('parameters', 'properties.propertyId', '=', 'parameters.property_id') 
+        ->where('bookings.bookingId', '=', $bookingId)
+        ->get();
+
+        return view('bookings.clerk.edit')->with('bookings', $booking);
+
     }
 
     /**
@@ -185,9 +195,37 @@ class ClerkBookingsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $bookingId)
     {
-        //
+        $this->validate($request, [
+            // 'startTime' => 'required',
+            // 'endTime' => 'required',
+            'clerk' => 'required',
+        ]);
+        
+        $approve = $request->approve;
+        $status;
+
+        if($approve== 'on'){
+            $approve = true;
+            $status = "Pending";
+
+        } 
+        
+        else {
+            $approve=false;
+            $status="Requested";
+        }
+        $newApprove = $approve;
+
+        $booking = ClerkBooking::find($bookingId);
+        // $booking->startTime = $request->get('startTime');
+        // $booking->endTime = $request->get('endTime');
+        $booking->approved = $newApprove;
+        $booking->status = $status;
+        $booking->clerk_id = $request->get('clerk');
+        $booking->save();
+        return redirect()->route('clerk.bookings.dashboard')->with('success','Data Updated');
     }
 
     /**

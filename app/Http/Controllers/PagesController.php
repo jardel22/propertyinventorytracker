@@ -8,7 +8,7 @@ class PagesController extends Controller
 {
     public function index(){
         $title = 'Welcome to Property Inventory Tracker';      
-        return view('pages.user.index')->with('title', $title);
+        return view('index')->with('title', $title);
     }
 
     public function details(){

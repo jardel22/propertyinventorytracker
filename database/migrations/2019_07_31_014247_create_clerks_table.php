@@ -14,12 +14,13 @@ class CreateClerksTable extends Migration
     public function up()
     {
         Schema::create('clerks', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('firstname');
-            $table->string('lastname');
+            $table->bigIncrements('clerkId');
+            $table->string('clerkFirstname');
+            $table->string('clerkLastname');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('clerkPhoneNumber');
             $table->rememberToken();
             $table->timestamps();
         });

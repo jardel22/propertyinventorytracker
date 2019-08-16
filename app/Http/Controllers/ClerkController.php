@@ -24,7 +24,7 @@ class ClerkController extends Controller
      */
     public function index()
     {
-        return view('clerk');
+        return view('bookings.clerk.calendar');
     }
 
     public function booking()

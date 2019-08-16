@@ -10,6 +10,7 @@ class Admin extends Authenticatable
 {
     use Notifiable;
 
+    protected $primaryKey = 'adminID';
     protected $guard = 'admin';
 
     /**

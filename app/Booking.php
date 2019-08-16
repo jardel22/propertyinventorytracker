@@ -6,28 +6,36 @@ use Illuminate\Database\Eloquent\Model;
 
 class Booking extends Model
 {
+    protected $primaryKey = 'bookingId';
     protected $guard = 'web';
 
     protected $table = 'bookings';
     protected $fillable = [
         'startTime',
         'endTime',
-        'user_id',
+        'client_id',
         'property_id',
+        'clerk_id', //NEW FIELD
         'approved',
         'agent',
+        'jobType', //ADD TO CREATE FUNCTION
         'status'
 
     ];
 
 
-    public function user() 
+    public function client() 
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Client::class);
     }
 
     public function property() 
     {
         return $this->belongsTo(Property::class);
+    }
+
+    public function clerk()
+    {
+        return $this->belongsTo(Clerk::class);
     }
 }
