@@ -100,8 +100,8 @@ class WordCreationController extends Controller
 
         foreach($bookings as $booking)
         {
-            $ldate = date('d-m-y H:i:s');
-            $sdate = date('d-m-y');
+            $ldate = date('d/m/y H:i:s');
+            $sdate = date('d/m/y');
                 
             $templateProcessor->setValue('BOOKINGID', $booking->bookingId);
             $templateProcessor->setValue('ADDRESSLINE1', $booking->addressLine1);
