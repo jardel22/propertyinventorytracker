@@ -16,7 +16,7 @@ class UpdateParametersTable extends Migration
         //update the properties table
         //update existing booking table
         Schema::table('parameters', function (Blueprint $table){
-            $table->bigInteger('property_id')->unsigned();
+            $table->unsignedBigInteger('property_id');
             $table->foreign('property_id')->references('propertyId')->on('properties');
         });
     }

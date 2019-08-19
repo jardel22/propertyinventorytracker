@@ -18,6 +18,7 @@
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.1.0/fullcalendar.min.css' /> {{--pdated stylesheet ctrl-z a few times to undo--}}
     <link rel="canonical" href="https://getbootstrap.com/docs/4.3/examples/navbars/">
     <link rel="stylesheet" href="{{asset('css/app.css')}}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
     <style>
         .bd-placeholder-img {

@@ -7,6 +7,7 @@ use App\ClerkBooking;
 use App\Property;
 use App\Parameter;
 use App\Clerk;
+use App\File;
 use Auth;
 use DB;
 
@@ -169,6 +170,31 @@ class ClerkBookingsController extends Controller
         return view('bookings.clerk.calendar', compact ('bookings'));
     }
 
+    // public function showUploadForm()
+    // {
+    //     return view('bookings.clerk.upload');
+    // }
+
+
+    // public function storeFile(request $request)
+    // {
+    //     if ($request->hasFile('file')) {
+    //         $filename = $request->file->getClientOriginalName();
+    //         $filesize = $request->file->getClientSize();
+    //         $request->file->storeAs('public/upload',$filename);
+    //         $file = new File;
+    //         $file->name = $filename;
+    //         $file->size = $filesize;
+    //         $file->save();
+    //         return 'yes';
+    //     }
+
+    //     // $filename = $request->file->getClientOriginalName();
+    //     // return $request->file->storeAs('public/upload', $filename);
+    //     return $request->all();
+        
+    // }
+    
     /**
      * Show the form for editing the specified resource.
      *

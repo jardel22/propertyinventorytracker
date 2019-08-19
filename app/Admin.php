@@ -10,7 +10,7 @@ class Admin extends Authenticatable
 {
     use Notifiable;
 
-    protected $primaryKey = 'adminID';
+    protected $primaryKey = 'adminId';
     protected $guard = 'admin';
 
     /**
@@ -19,7 +19,10 @@ class Admin extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'firstname', 'lastname', 'email', 'password',
+        'adminFirstname', 
+        'adminLastname', 
+        'email', 
+        'password',
     ];
 
     /**
@@ -39,4 +42,5 @@ class Admin extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
 }

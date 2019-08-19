@@ -19,7 +19,8 @@ class Booking extends Model
         'approved',
         'agent',
         'jobType', //ADD TO CREATE FUNCTION
-        'status'
+        'status',
+        'file_id',
 
     ];
 
@@ -37,5 +38,10 @@ class Booking extends Model
     public function clerk()
     {
         return $this->belongsTo(Clerk::class);
+    }
+
+    public function file()
+    {
+        return $this->hasMany(File::class);
     }
 }

@@ -1,5 +1,5 @@
 <!-- calendar.blade.php -->
-@extends('layouts.userapp')
+@extends('layouts.adminapp')
 
 @section('content')
 <div class="container">
@@ -10,7 +10,7 @@
      @endif
    <div class="panel panel-default">
         <div class="panel-heading">
-            <h2>Laravel Full Calendar Tutorial</h2>
+            <h2>Approved Bookings</h2>
         </div>
         <div class="panel-body" >
           <div id='calendar'></div> {{--To show Calendar--}}
@@ -63,24 +63,30 @@ $(document).ready(function() {
           <th>End Time</th>
           <th>Clerk Assigned</th>
           <th>Price</th>
-          <th>Status</th>
           <th>More Info</th>
-          
       </tr>
   </thead>
   
   <tbody>
   @forelse($bookings as $booking)
   <?php $ldate = date('Y-m-d H:i:s'); ?>
-  @if ($booking->startTime > $ldate && Auth::user()->clientId == $booking->clientId )
+  @if ($booking->startTime > $ldate && Auth::user()->clerkId == $booking->clerk_id )
 
-  <tr style="text-align:center">
+  <tr style="text-align:center; background-color:#70AADD; color:white">
       <td>{{$booking->addressLine1}}</td>
       <td>{{$booking->startTime}}</td>
       <td>{{$booking->endTime}}</td>
       <td>{{$booking->clerkFirstname}} {{$booking->clerkLastname}}</td>
       <td>{{$booking->price}}</td>
-      <td>{{$booking->status}}</td>
+      <td> <a href="/bookings/{{$booking->bookingId}}" class="btn btn-primary btn-sm">View</a></td>
+  </tr>
+  @elseif($booking->startTime > $ldate)
+  <tr style="text-align:center; background-color:#E2ECF5; color:black">
+      <td>{{$booking->addressLine1}}</td>
+      <td>{{$booking->startTime}}</td>
+      <td>{{$booking->endTime}}</td>
+      <td>{{$booking->clerkFirstname}} {{$booking->clerkLastname}}</td>
+      <td>{{$booking->price}}</td>
       <td> <a href="/bookings/{{$booking->bookingId}}" class="btn btn-primary btn-sm">View</a></td>
   </tr>
   @endif

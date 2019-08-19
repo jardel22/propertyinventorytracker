@@ -19,23 +19,24 @@ class ClerkBooking extends Model
         'approved',
         'agent',
         'jobType', //ADD TO CREATE FUNCTION
-        'status'
+        'status',
+        'file_id',//NEW FIELD
 
     ];
 
 
     public function client() 
     {
-        return $this->belongsTo(Client::class);
+        return $this->belongsTo('App\Client', 'client_id', 'clientId');
     }
 
     public function property() 
     {
-        return $this->belongsTo(Property::class);
+        return $this->belongsTo('App\Property', 'property_id', 'propertyId');
     }
 
     public function clerk()
     {
-        return $this->belongsTo(Clerk::class);
+        return $this->belongsTo('App\Clerk', 'clerk_id', 'clerkId');
     }
 }

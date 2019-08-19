@@ -12,7 +12,7 @@ class Property extends Model
         'addressLine1',
         'city',
         'county',//NEW FIELD
-        'postcode'
+        'postcode',
     ];
 
 

@@ -15,13 +15,15 @@ class UpdateBookingsTable extends Migration
     {
         //update existing booking table
         Schema::table('bookings', function (Blueprint $table){
-            $table->bigInteger('client_id')->unsigned();
-            $table->bigInteger('property_id')->unsigned();
-            $table->bigInteger('clerk_id')->unsigned()->nullable();
+            $table->unsignedBigInteger('client_id');
+            $table->unsignedBigInteger('property_id');
+            $table->unsignedBigInteger('clerk_id')->nullable();
+            $table->unsignedBigInteger('file_id')->nullable();
 
             $table->foreign('client_id')->references('clientId')->on('clients');
             $table->foreign('property_id')->references('propertyId')->on('properties');
             $table->foreign('clerk_id')->references('clerkId')->on('clerks');
+            $table->foreign('file_id')->references('fileId')->on('files');
         });
     }
 
@@ -37,6 +39,7 @@ class UpdateBookingsTable extends Migration
             $table->dropForeign('client_id');
             $table->dropForeign('property_id');
             $table->dropForeign('clerk_id');
+            $table->dropForeign('file_id');
         });
     }
 }

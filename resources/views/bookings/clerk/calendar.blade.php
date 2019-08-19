@@ -64,7 +64,6 @@ $(document).ready(function() {
           <th>Clerk Assigned</th>
           <th>Price</th>
           <th>More Info</th>
-          
       </tr>
   </thead>
   

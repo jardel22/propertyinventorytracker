@@ -1,4 +1,4 @@
-@extends('layouts.clerkapp')
+@extends('layouts.adminapp')
 
 @section('content')
 @forelse($bookings as $booking)
@@ -35,7 +35,7 @@
   </div> --}}
 <br>
 <form method="post" action="
-{{action ('ClerkBookingsController@update', $booking->bookingId) }}" >
+{{action ('AdminBookingsController@update', $booking->bookingId) }}" >
     {{csrf_field()}}
 
         <input type="hidden" name="_method" value="PATCH"/>

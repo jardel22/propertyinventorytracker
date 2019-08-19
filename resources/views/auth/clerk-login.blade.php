@@ -8,6 +8,7 @@
                 <div class="card-header"><strong>CLERK</strong> Login</div>
 
                 <div class="card-body">
+
                     <form method="POST" action="{{ route('clerk.login.submit') }}">
                         @csrf
 
@@ -64,7 +65,9 @@
                                 @endif
                             </div>
                         </div>
+
                     </form>
+                    
                 </div>
             </div>
         </div>
