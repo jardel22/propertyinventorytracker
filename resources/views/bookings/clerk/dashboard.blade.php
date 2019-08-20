@@ -12,7 +12,7 @@
                         <tr style="text-align:center">
                             <th>Start Time</th>
                             <th>End Time</th>
-                            <th>Approved</th>
+                            <th>Status</th>
                             <th>More Info</th>
                             <th>Update</th>
                             <th>Create Report</th>
@@ -21,26 +21,40 @@
                     
                     <tbody>
                     @forelse($bookings as $booking)
-                        <?php $ldate = date('Y-m-d H:i:s'); ?>
+                        <?php  
+                        date_default_timezone_set('Europe/London');
+                        $ldate = date('Y-m-d H:i:s'); ?>
+                        
                         @if($booking->startTime < $ldate && Auth::user()->clerkId == $booking->clerk_id)
 
                         <tr style="text-align:center">
                             <td>{{$booking->startTime}}</td>
                             <td>{{$booking->endTime}}</td>
-                            <td>@if($booking -> approved == 0)
+                            <td>
+                            
+                                @if($booking -> approved == 0)
                                     {{__('Booking Not Approved Yet')}}
-                                @endif
-                                @if($booking -> approved == 1 && $booking -> status =  'Check in portal')
+                                @elseif($booking -> approved == 1 && $booking -> status ===  'Check in portal')
                                     {{__('Report Submitted to Client')}}
+                                
+                                @elseif($booking -> approved == 1 && $booking -> status ===  'Completed')
+                                    {{__('Completed and Reviewed by Client')}}
+                                
                                 @elseif($booking -> approved == 1)
-                                    {{__('Booking Approved')}}
+                                    {{__('Booking Conducted')}}
                                 @endif
+
                             </td>
                             <td> <a href="/clerk/bookings/{{$booking->bookingId}}/show" class="btn btn-success btn-sm">View</a></td>
-                            <td> <a href="/clerk/bookings/{{$booking->bookingId}}/edit" class="btn btn-primary btn-sm">Update</a></td>
-                            <td> <a href="/clerk/bookings/{{$booking->bookingId}}/report" class="btn btn-primary btn-sm">Report</a></td>
-                            
 
+                            <td> <a href="/clerk/bookings/{{$booking->bookingId}}/edit" class="btn btn-primary btn-sm disabled">Update</a></td>
+
+                            @if($booking->status === 'Completed')
+                            <td> <a href="/clerk/bookings/{{$booking->bookingId}}/report" class="btn btn-primary btn-sm disabled">Report</a></td>
+                            @else
+                            <td> <a href="/clerk/bookings/{{$booking->bookingId}}/report" class="btn btn-primary btn-sm">Report</a></td>
+                            @endif
+                        
                         </tr>
 
                         @else
@@ -56,9 +70,11 @@
                                 @endif
                             </td>
                             <td> <a href="bookings/{{$booking->bookingId}}/show" class="btn btn-success btn-sm">View</a></td>
-                            <td> <a href="bookings/{{$booking->bookingId}}/edit" class="btn btn-primary btn-sm">Update</a></td>
-                            
 
+                            <td> <a href="bookings/{{$booking->bookingId}}/edit" class="btn btn-primary btn-sm">Update</a></td>
+
+                            <td> <a href="/clerk/bookings/{{$booking->bookingId}}/report" class="btn btn-primary btn-sm disabled">Report</a></td>
+                            
                         </tr>   
                     @endif
                     @empty

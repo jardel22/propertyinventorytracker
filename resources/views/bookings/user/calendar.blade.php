@@ -10,7 +10,7 @@
      @endif
    <div class="panel panel-default">
         <div class="panel-heading">
-            <h2>Laravel Full Calendar Tutorial</h2>
+            <h2>PropertyInventoryTracker Booking Calendar</h2>
         </div>
         <div class="panel-body" >
           <div id='calendar'></div> {{--To show Calendar--}}
@@ -51,7 +51,6 @@ $(document).ready(function() {
 });
 </script>
 
-
 <br>
 <br>
 <div class="container">
@@ -71,7 +70,9 @@ $(document).ready(function() {
   
   <tbody>
   @forelse($bookings as $booking)
-  <?php $ldate = date('Y-m-d H:i:s'); ?>
+  <?php 
+  date_default_timezone_set('Europe/London')
+  $ldate = date('Y-m-d H:i:s'); ?>
   @if ($booking->startTime > $ldate && Auth::user()->clientId == $booking->clientId )
 
   <tr style="text-align:center">

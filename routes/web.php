@@ -39,6 +39,7 @@ Route::get('/download/{file}', function ($file='') {
 Route::get('/bookings/{booking}/show', 'BookingsController@show')->name('user.bookings.show');
 
 Route::get('/bookings/{booking}/portal', 'BookingsController@showPortal')->name('user.bookings.showPortal');
+Route::post('/bookings/{booking}/portal', 'BookingsController@updatePortal')->name('user.bookings.updatePortal');
 
 
 Auth::routes();
@@ -90,8 +91,6 @@ Route::prefix('clerk')->group(function(){
 });
 
 Route::get('bookings/calendar', 'BookingsController@calendar')->name('bookings.user.calendar');
-
-Route::get('bookings/portal', 'BookingsController@portal')->name('bookings.user.calendar');
 
 Route::post('bookings/dashboard/toggle-approve', 'BookingsController@approve')->name('bookings.user.dashboard.toggle-approve');
 

@@ -40,17 +40,16 @@ class WordCreationController extends Controller
 
     public function storeFile(request $request, $bookingId)
     {
-        // $booking = DB::table('bookings')
-        // ->join('clients', 'bookings.client_id', '=', 'clients.clientId')
-        // ->join('properties', 'bookings.property_id', '=', 'properties.propertyId')
-        // ->join('parameters', 'properties.propertyId', '=', 'parameters.property_id')
-        // ->where('bookings.bookingId', '=', $bookingId)
-        // ->get();
+        
 
         if ($request->hasFile('file')) {
+           
+            
+           
             $filename = $request->clientFirstname.' '.$request->clientLastname.' '.$request->bookingId.' '.$request->jobType.' Report';
             $filesize = $request->file->getClientSize();
             $request->file->storeAs('public/upload',$filename);
+            
             $file = new File;
 
             $booking = ClerkBooking::find($bookingId);
@@ -66,6 +65,9 @@ class WordCreationController extends Controller
             $booking->save();
         }
 
+        $this->validate($request, [
+            'file' => 'required'
+        ]);
         
         return redirect()->route('clerk.bookings.dashboard')->with('success','File Uploaded Successfully');
         
@@ -100,6 +102,7 @@ class WordCreationController extends Controller
 
         foreach($bookings as $booking)
         {
+            date_default_timezone_set('Europe/London');
             $ldate = date('d/m/y H:i:s');
             $sdate = date('d/m/y');
                 
@@ -118,7 +121,7 @@ class WordCreationController extends Controller
             $templateProcessor->setValue('BUSINESSADDRESSLINE4', 'B43 6LJ' );
         }
        
-        $export_file = public_path('filename.docx');
+        $export_file = public_path('PIT_Inventory_Report.docx');
 
         $templateProcessor->saveAs($export_file);
         return response()->download($export_file)->deleteFileAfterSend(true);

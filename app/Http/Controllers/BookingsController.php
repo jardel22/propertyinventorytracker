@@ -255,6 +255,23 @@ class BookingsController extends Controller
         return view('bookings.user.portal')->with('bookings', $book);
     }
 
+    public function updatePortal(Request $request, $bookingId)
+    {
+        $booking = Booking::find($bookingId);
+
+        
+        $booking->status ="Completed";
+        $booking->save();
+        
+        $comments = $request->propertyId;
+        $parameter = Parameter::where('property_id', $request->propertyId)->first();
+
+        $parameter->comments = $request->comments;
+        $parameter->save();
+        
+        return redirect('/bookings')->with('success', 'Booking Process Completed Successfully');
+    }
+
     /**
      * Show the form for editing the specified resource.
      *
