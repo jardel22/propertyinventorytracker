@@ -26,6 +26,8 @@ Route::get('/contact', 'PagesController@contact');
 
 Route::get('/welcome', 'PagesController@welcome');
 
+Route::get('/postcode', 'PagesController@postcode');
+
 
 
 Route::get('/uploadfile','UploadFileController@index');

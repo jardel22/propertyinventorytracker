@@ -12,8 +12,8 @@
     {!! Form::open(['action' => 'ClerkBookingsController@store', 'method' => 'POST']) !!}
         
         <div class="form-group">
-        <label for="clientId"><strong>Assign a Clerk to the Booking</strong></label>
-        <select name="clientId" id="clientId" class="form-control" title="Assign a Clerk to the Booking">
+        <label for="clientId">Assign a Client to the Booking</label>
+        <select name="clientId" id="clientId" class="form-control" title="Assign a Client to the Booking">
          
             @foreach ($clientname_array as $data)
             <option value="{{$data->clientId}}" style="text-transform:capitalize">

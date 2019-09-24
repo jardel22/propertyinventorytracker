@@ -1,37 +1,39 @@
-<!-- calendar.blade.php -->
+{{-- extending the layout for users (customers) interacting with the system --}}
 @extends('layouts.userapp')
 
 @section('content')
 <div class="container">
-@if (\Session::has('success'))
+  @if (\Session::has('success'))
       <div class="alert alert-success">
         <p>{{ \Session::get('success') }}</p>
-      </div><br />
-     @endif
-   <div class="panel panel-default">
-        <div class="panel-heading">
-            <h2>PropertyInventoryTracker Booking Calendar</h2>
-        </div>
-        <div class="panel-body" >
-          <div id='calendar'></div> {{--To show Calendar--}}
-            {{-- {!! $calendar->calendar() !!} --}}
-        </div>
+      </div><br/>
+  @endif
+  <div class="panel panel-default">
+    <div class="panel-heading">
+        <h2>PropertyInventoryTracker Booking Calendar</h2>
+      </div>
+      <div class="panel-body" >
+        <div id='calendar'></div>
+      </div>
     </div>
-</div>
+  </div>
+
+{{-- scripts used to display the calendar --}}
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js"></script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.1.0/fullcalendar.min.js'></script>
 
-{{-- {!! $calendar->script() !!} --}}
-
-{{-- actual script for calendar --}}
+{{-- script for content shown within the calendar view --}}
 <script>
 $(document).ready(function() {
-    // page is now ready, initialize the calendar...
-  $('#calendar').fullCalendar({
-        // put your options and callbacks here
-  defaultView: 'agendaWeek',
-    events : [
+  var calendar = $('#calendar').fullCalendar({
+      editable:false,
+      header:{
+      left:'prev,next today',
+      center:'title',
+      right:'month,agendaWeek,agendaDay'
+      },
+      events : [
       @foreach($bookings as $booking)
         {
           title : '{{ $booking->clientFirstname . ' ' . $booking->clientLastname }}',
@@ -41,19 +43,21 @@ $(document).ready(function() {
           @endif
         },
       @endforeach
-    ],
-
-    dayClick: function (start, allDay, jsEvent, view) {
-    alert('You clicked me!');
-}
-
+      ],  
+      selectable:true,
+      selectHelper:true,
+      editable:false,
+      
+      
   });
-});
+  });
+
 </script>
 
 <br>
 <br>
 <div class="container">
+{{-- display a table under the calendar which will have information regarding confirmed bookings --}}
 <table class="table table-striped">
   <thead>
       <tr style="text-align:center">
@@ -70,9 +74,12 @@ $(document).ready(function() {
   
   <tbody>
   @forelse($bookings as $booking)
+  {{-- set the timezone to London because the during daylight saving the clocks change. This change is not done automatically within the system without the timezone being set --}}
   <?php 
-  date_default_timezone_set('Europe/London')
+  date_default_timezone_set('Europe/London');
   $ldate = date('Y-m-d H:i:s'); ?>
+
+  {{-- if the bookings start time is more than the current date and time and the users id is equal to the id of the client that requested the booking do what it written below --}}
   @if ($booking->startTime > $ldate && Auth::user()->clientId == $booking->clientId )
 
   <tr style="text-align:center">
@@ -86,7 +93,7 @@ $(document).ready(function() {
   </tr>
   @endif
   @empty
-  <h4>No Bookings</h4>
+  <tr>No Bookings</tr>
   
   @endforelse
 

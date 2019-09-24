@@ -6,9 +6,11 @@
         <div class="card-header">Create a Booking</div>
     </div>
     <br>
+<?php header('Access-Control-Allow-Origin: *'); ?>
 
-    {!! Form::open(['action' => 'BookingsController@store', 'method' => 'POST']) !!}
+    {!! Form::open(['action' => 'BookingsController@store', 'class' => 'create', 'method' => 'POST']) !!}
         
+        <fieldset>
         <div class="form-group">
             {{Form::label('jobType', 'What Services Do You Require?')}}
             {{Form::select('jobType', array(
@@ -28,6 +30,8 @@
             {{Form::time('time', 'What time would you like to book?', ['class'=>'form-control timepicker-lg'])}}
         </div>
 
+
+        
         <div class="form-group">
             {{Form::label('addressLine1', 'What is the first line of your address?')}}
             {{Form::text('addressLine1', '', ['class'=>'form-control', 'placeholder' => 'Address Line 1'])}}
@@ -43,9 +47,25 @@
             {{Form::text('county', '', ['class'=>'form-control', 'placeholder' => 'County'])}}
         </div>
 
+<script>
+    //call geocode
+    
+    geocode();
+    function geocode(){
+        var postcode = 'b47et';
+        axios.get('https://api.postcodes.io/postcodes/'+postcode)
+        .then(function(response){
+            console.log(response);
+        })
+        .catch(function(error){
+            console.log(error);
+        })
+}
+</script>
+        
         <div class="form-group">
             {{Form::label('postcode', 'Please enter the postcode of the property')}}
-            {{Form::text('postcode', '', ['class'=>'form-control', 'placeholder' => 'Postcode'])}}
+            {{Form::text('postcode', '', ['class'=>'form-control', 'id'=>'postcode', 'placeholder' => 'Postcode'])}}
         </div>
 
         <div class="form-group">
@@ -105,6 +125,8 @@
 
 
         {{Form::submit('Submit', ['class'=>'btn btn-primary'])}}
+        </fieldset>
     {!! Form::close() !!}
 </div>
+
 @endsection

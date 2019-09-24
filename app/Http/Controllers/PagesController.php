@@ -34,4 +34,8 @@ class PagesController extends Controller
     public function welcome(){
         return view('welcome');
     }
+
+    public function postcode(){
+        return view('postcode');
+    }
 }

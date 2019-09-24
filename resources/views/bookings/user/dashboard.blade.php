@@ -33,6 +33,17 @@
                         <td> <a href="/bookings/{{$booking->bookingId}}/show" class="btn btn-primary btn-sm">View</a></td>
                     </tr>
 
+                    @elseif($booking->status === 'Completed')
+
+                    <tr style="text-align:center">
+                        <td>{{$booking->addressLine1}}</td>
+                        <td>{{$booking->startTime}}</td>
+                        <td>{{$booking->endTime}}</td>
+                        <td><span class="badge badge-success">{{$booking->status}}</span></td>
+                        
+                        <td> <a href="/bookings/{{$booking->bookingId}}/show" class="btn btn-primary btn-sm">View</a></td>
+                    </tr>
+
                     @else
                     <tr style="text-align:center">
                         <td>{{$booking->addressLine1}}</td>

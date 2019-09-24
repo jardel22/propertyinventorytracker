@@ -14,7 +14,7 @@
                             <th>End Time</th>
                             <th>Status</th>
                             <th>More Info</th>
-                            <th>Update</th>
+                            <th>Approve</th>
                             <th>Create Report</th>
                         </tr>
                     </thead>
@@ -47,7 +47,7 @@
                             </td>
                             <td> <a href="/clerk/bookings/{{$booking->bookingId}}/show" class="btn btn-success btn-sm">View</a></td>
 
-                            <td> <a href="/clerk/bookings/{{$booking->bookingId}}/edit" class="btn btn-primary btn-sm disabled">Update</a></td>
+                            <td> <a href="/clerk/bookings/{{$booking->bookingId}}/edit" class="btn btn-primary btn-sm disabled">Approve</a></td>
 
                             @if($booking->status === 'Completed')
                             <td> <a href="/clerk/bookings/{{$booking->bookingId}}/report" class="btn btn-primary btn-sm disabled">Report</a></td>
@@ -71,9 +71,10 @@
                             </td>
                             <td> <a href="bookings/{{$booking->bookingId}}/show" class="btn btn-success btn-sm">View</a></td>
 
-                            <td> <a href="bookings/{{$booking->bookingId}}/edit" class="btn btn-primary btn-sm">Update</a></td>
+                            <td> <a href="bookings/{{$booking->bookingId}}/edit" class="btn btn-primary btn-sm">Approve</a></td>
 
-                            <td> <a href="/clerk/bookings/{{$booking->bookingId}}/report" class="btn btn-primary btn-sm disabled">Report</a></td>
+                            <td> <a href="/
+                            clerk/bookings/{{$booking->bookingId}}/report" class="btn btn-primary btn-sm disabled">Report</a></td>
                             
                         </tr>   
                     @endif

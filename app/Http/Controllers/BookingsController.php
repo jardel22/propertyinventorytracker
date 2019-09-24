@@ -120,10 +120,13 @@ class BookingsController extends Controller
      */
     public function store(Request $request)
     {
-
+        
         $starttime = $request->date.' '.$request->time;
         $endtime = date('Y:m:d H:i:s', strtotime($starttime)+7200);
         echo $endtime;
+
+        date_default_timezone_set('Europe/London');
+        $today = date('d/m/y');
 
 
 
@@ -133,7 +136,7 @@ class BookingsController extends Controller
 
         $this->validate($request, [
             'jobType' => 'required', //NEW FIELD - done
-            'date' => 'required',
+            'date' => 'required|date|after:yesterday',
             'time' => 'required',
             'addressLine1' => 'required',
             'city' => 'required',
