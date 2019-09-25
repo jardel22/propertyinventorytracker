@@ -1,6 +1,7 @@
 @extends('layouts.userapp')
 
 @section('content')
+{{Breadcrumbs::render('bookings')}}
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -15,6 +16,7 @@
                             <th>End Time</th>
                             <th>Status</th>
                             <th>More Info</th>
+                            <th>Delete</th>
                             
                         </tr>
                     </thead>
@@ -29,8 +31,13 @@
                         <td>{{$booking->startTime}}</td>
                         <td>{{$booking->endTime}}</td>
                         <td><a href="/bookings/{{$booking->bookingId}}/portal" class="btn btn-danger btn-sm">{{$booking->status}}</a></td>
-                        
-                        <td> <a href="/bookings/{{$booking->bookingId}}/show" class="btn btn-primary btn-sm">View</a></td>
+                        <td> <a href="/bookings/{{$booking->bookingId}}/show" class="btn btn-primary btn-sm">View</a> </td>
+                        <td>
+                        {!!Form::open(['action' => ['BookingsController@destroy', $booking->bookingId], 'method' => 'POST', 'class' => 'pull-right'])!!}
+                            {{Form::hidden('_method', 'DELETE')}}
+                            {{Form::submit('Delete', ['class' => 'btn btn-danger btn-sm'])}}
+                        {!!Form::close()!!}
+                        </td>
                     </tr>
 
                     @elseif($booking->status === 'Completed')
@@ -40,8 +47,13 @@
                         <td>{{$booking->startTime}}</td>
                         <td>{{$booking->endTime}}</td>
                         <td><span class="badge badge-success">{{$booking->status}}</span></td>
-                        
                         <td> <a href="/bookings/{{$booking->bookingId}}/show" class="btn btn-primary btn-sm">View</a></td>
+                        <td>
+                        {!!Form::open(['action' => ['BookingsController@destroy', $booking->bookingId], 'method' => 'POST', 'class' => 'pull-right'])!!}
+                            {{Form::hidden('_method', 'DELETE')}}
+                            {{Form::submit('Delete', ['class' => 'btn btn-danger btn-sm'])}}
+                        {!!Form::close()!!}
+                        </td>
                     </tr>
 
                     @else
@@ -51,6 +63,12 @@
                         <td>{{$booking->endTime}}</td>
                         <td>{{$booking->status}}</td>
                         <td> <a href="/bookings/{{$booking->bookingId}}" class="btn btn-primary btn-sm">View</a></td>
+                        <td>
+                        {!!Form::open(['action' => ['BookingsController@destroy', $booking->bookingId], 'method' => 'POST', 'class' => 'pull-right'])!!}
+                            {{Form::hidden('_method', 'DELETE')}}
+                            {{Form::submit('Delete', ['class' => 'btn btn-danger btn-sm'])}}
+                        {!!Form::close()!!}
+                        </td>
                     </tr>
                     @endif
 

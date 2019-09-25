@@ -1,6 +1,7 @@
 @extends('layouts.userapp')
 
 @section('content')
+{{Breadcrumbs::render('create')}}
 <div class="container">
     <div class="card">
         <div class="card-header">Create a Booking</div>

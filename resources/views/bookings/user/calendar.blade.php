@@ -2,6 +2,7 @@
 @extends('layouts.userapp')
 
 @section('content')
+{{Breadcrumbs::render('home')}}
 <div class="container">
   @if (\Session::has('success'))
       <div class="alert alert-success">
@@ -11,6 +12,7 @@
   <div class="panel panel-default">
     <div class="panel-heading">
         <h2>PropertyInventoryTracker Booking Calendar</h2>
+        <br>
       </div>
       <div class="panel-body" >
         <div id='calendar'></div>

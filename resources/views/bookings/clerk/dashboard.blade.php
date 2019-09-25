@@ -16,6 +16,7 @@
                             <th>More Info</th>
                             <th>Approve</th>
                             <th>Create Report</th>
+                            <th>Delete</th>
                         </tr>
                     </thead>
                     
@@ -46,15 +47,19 @@
 
                             </td>
                             <td> <a href="/clerk/bookings/{{$booking->bookingId}}/show" class="btn btn-success btn-sm">View</a></td>
-
                             <td> <a href="/clerk/bookings/{{$booking->bookingId}}/edit" class="btn btn-primary btn-sm disabled">Approve</a></td>
-
                             @if($booking->status === 'Completed')
                             <td> <a href="/clerk/bookings/{{$booking->bookingId}}/report" class="btn btn-primary btn-sm disabled">Report</a></td>
                             @else
                             <td> <a href="/clerk/bookings/{{$booking->bookingId}}/report" class="btn btn-primary btn-sm">Report</a></td>
                             @endif
                         
+                            <td>
+                            {!!Form::open(['action' => ['BookingsController@destroy', $booking->bookingId], 'method' => 'POST', 'class' => 'pull-right'])!!}
+                                {{Form::hidden('_method', 'DELETE')}}
+                                {{Form::submit('Delete', ['class' => 'btn btn-danger'])}}
+                            {!!Form::close()!!}
+                            </td>
                         </tr>
 
                         @else
@@ -75,7 +80,12 @@
 
                             <td> <a href="/
                             clerk/bookings/{{$booking->bookingId}}/report" class="btn btn-primary btn-sm disabled">Report</a></td>
-                            
+                            <td>
+                            {!!Form::open(['action' => ['BookingsController@destroy', $booking->bookingId], 'method' => 'POST', 'class' => 'pull-right'])!!}
+                                {{Form::hidden('_method', 'DELETE')}}
+                                {{Form::submit('Delete', ['class' => 'btn btn-danger'])}}
+                            {!!Form::close()!!}
+                            </td>
                         </tr>   
                     @endif
                     @empty

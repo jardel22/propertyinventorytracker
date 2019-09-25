@@ -3,17 +3,40 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Booking;
+use App\Property;
+use App\Parameter;
+use Auth;
+use DB;
 
 class PagesController extends Controller
 {
+    protected $property, $booking, $parameter;
+    
+    public function __construct()
+    {
+
+        $this->middleware('auth:web');
+
+
+        $this->booking = new Booking();
+        $this->property = new Property();
+        $this->parameter = new Parameter();
+    }
+ 
     public function index(){
         $title = 'Welcome to Property Inventory Tracker';      
         return view('index')->with('title', $title);
     }
 
     public function details(){
-        $title = 'My Details';
-        return view('pages.user.details')->with('title', $title);
+        $client_id = Auth::user()->clientId;
+
+        $clients = DB::table('clients')
+        ->where('clientId', '=', $client_id)
+        ->get();
+
+        return view('pages.user.details')->with('clients', $clients);
     }
 
     public function contact(){

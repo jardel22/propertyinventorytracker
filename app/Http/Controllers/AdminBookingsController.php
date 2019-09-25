@@ -234,8 +234,14 @@ class AdminBookingsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    
     public function destroy($id)
     {
-        //
+        // delete
+        $booking = Booking::find($id);
+        $booking->delete();
+
+        // redirect
+        return redirect('/bookings')->with('success', 'Successfully deleted the booking!');
     }
 }

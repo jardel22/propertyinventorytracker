@@ -11,24 +11,17 @@
 |
 */
 
+Route::get('/details', 'PagesController@details')->name('user.details');
+Route::get('/details/update-password', 'ClientController@password')->name('user.details.password');
+Route::post('/details/update-password', 'ClientController@updatePassword')->name('user.details.updatePassword');
 
-Route::get('/', 'PagesController@index');
+Route::get('/pricelist', 'PagesController@pricelist')->name('user.pricelist');
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/statements', 'PagesController@statements')->name('user.statements');
 
-Route::get('/details', 'PagesController@details');
-
-Route::get('/pricelist', 'PagesController@pricelist');
-
-Route::get('/statements', 'PagesController@statements');
-
-Route::get('/contact', 'PagesController@contact');
+Route::get('/contact', 'PagesController@contact')->name('user.contact');
 
 Route::get('/welcome', 'PagesController@welcome');
-
-Route::get('/postcode', 'PagesController@postcode');
-
-
 
 Route::get('/uploadfile','UploadFileController@index');
 Route::post('/uploadfile','UploadFileController@showUploadFile');
@@ -47,8 +40,6 @@ Route::post('/bookings/{booking}/portal', 'BookingsController@updatePortal')->na
 Auth::routes();
 
 Route::get('/', 'BookingsController@calendar')->name('bookings.user.dashboard');
-
-Route::get('/home', 'BookingsController@calendar')->name('bookings.user.dashboard');
 
 Route::post('/logout', 'Auth\LoginController@clientLogout')->name('user.logout');
 
@@ -91,8 +82,6 @@ Route::prefix('clerk')->group(function(){
     Route::get('/', 'ClerkBookingsController@calendar')->name('clerk.dashboard');  
     
 });
-
-Route::get('bookings/calendar', 'BookingsController@calendar')->name('bookings.user.calendar');
 
 Route::post('bookings/dashboard/toggle-approve', 'BookingsController@approve')->name('bookings.user.dashboard.toggle-approve');
 

@@ -34,11 +34,12 @@ class BookingsController extends Controller
     {
         $client_id = Auth::user()->clientId;
 
-        $bookings = DB::table('bookings')
+        $book = DB::table('bookings')
         ->join('clients', 'bookings.client_id', '=', 'clients.clientId')
         ->join('properties', 'bookings.property_id', '=', 'properties.propertyId')
-        ->join('parameters', 'properties.propertyId', '=', 'parameters.property_id')               
-        ->where('bookings.client_id', '=', $client_id)
+        ->join('parameters', 'properties.propertyId', '=', 'parameters.property_id')
+        ->where('bookings.bookingId', '=', $bookingId)
+        ->where('clients.clientId', '=', $client_id)
         ->get();
         
         //Booking::orderBy('created_at', 'desc')->get();
@@ -304,8 +305,15 @@ class BookingsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    
+
     public function destroy($id)
     {
-        //
+        // delete
+        $booking = Booking::find($id);
+        $booking->delete();
+
+        // redirect
+        return redirect('/bookings')->with('success', 'Successfully deleted the booking!');
     }
 }
