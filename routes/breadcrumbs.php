@@ -31,6 +31,12 @@ Breadcrumbs::for('details', function ($trail){
     $trail->push('My Details', route('user.details'));
 });
 
+//Home > [My Details] > [Update Password]
+Breadcrumbs::for('changePassword', function ($trail){
+    $trail->parent('details');
+    $trail->push('Change Password', route('user.details.password'));
+});
+
 //Home > [Contact Us]
 Breadcrumbs::for('contact-us', function ($trail){
     $trail->parent('home');

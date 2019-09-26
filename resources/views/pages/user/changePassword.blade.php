@@ -1,7 +1,7 @@
 @extends('layouts.userapp')
 
 @section('content')
-{{Breadcrumbs::render('details')}}
+{{Breadcrumbs::render('changePassword')}}
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">

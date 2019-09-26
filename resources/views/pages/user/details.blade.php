@@ -11,12 +11,11 @@
                 @forelse($clients as $client)
                 <p>
                 <h3 style="text-align:center"> Name: {{$client->clientFirstname}} {{$client->clientLastname}}
-                <br><br>                
-                Email Address: {{$client->email}} 
-                <br><br>
-                Click here to update email
-                <br><br>
-                Click here to update password</h3>
+                    <br><br>                
+                    Email Address: {{$client->email}} 
+                    <br><br>
+                    <a href="/details/update-password"> Click here to update password</a>
+                </h3>
                 </p>
 
                  
