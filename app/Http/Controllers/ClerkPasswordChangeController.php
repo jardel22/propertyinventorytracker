@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Booking;
 use App\Property;
 use App\Parameter;
-use App\Admin;
+use App\Clerk;
 use Auth;
 use DB;
 

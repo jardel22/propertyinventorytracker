@@ -1,17 +1,19 @@
 @extends('layouts.userapp')
 
 @section('content')
+<div style="margin:10px 10px 10px 10px">
 {{Breadcrumbs::render('contact-us')}}
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header" style="text-align:center; text-transform:capitalize"><strong>Contact Us</strong></div>
-                
-                <div style="margin-left:10px;margin-top:10px">
+</div>
+
+<div style="margin:10px 10px 10px 10px">
+    <div class="card">
+        <div class="card-header" style="text-align:center; text-transform:capitalize"><strong>Contact Us</h1></strong></div>
+
+        
+        <div class="table-responsive-md" style="margin:10px 10px 10px 10px"> 
+
                 <strong>
                 Office Details for Property Inventory Tracker:</strong>
-                </div>
                     <div style="text-align:right;margin-right:10px">
                     Office 2
                     <br>

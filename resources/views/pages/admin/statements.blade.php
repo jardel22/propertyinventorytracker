@@ -1,17 +1,17 @@
 @extends('layouts.adminapp')
 
 @section('content')
+<div style="margin:10px 10px 10px 10px">
 {{Breadcrumbs::render('adminStatements')}}
-            <div style="margin:10px 10px 10px 10px;text-decoration:underline">
+</div>
+
+            <div style="margin:10px 10px 10px 10px">
             <div class="card">
                 <div class="card-header" style="text-align:center; text-transform:capitalize"><strong>Statements</h1></strong></div>
     
-
-                <div style="margin:10px 10px 10px 10px;text-decoration:underline">
-                <p><strong><mark>INVENTORY REPORT</mark></strong></p>
-                </div>
                 
-                <div class="table-responsive-md" style="margin:10px 10px 10px 10px;text-decoration:underline">
+                <div class="table-responsive-md" style="margin:10px 10px 10px 10px">
+
                     <table class="table table-bordered">
                     <thead>
                     <tr>
@@ -48,5 +48,4 @@
 
             </div>
         </div>
-</div>
 @endsection

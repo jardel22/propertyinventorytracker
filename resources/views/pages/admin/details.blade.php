@@ -1,13 +1,16 @@
 @extends('layouts.adminapp')
 
 @section('content')
+<div style="margin:10px 10px 10px 10px">
 {{Breadcrumbs::render('adminDetails')}}
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header" style="text-align:center; text-transform:capitalize"><strong>My Details</h1></strong></div>
-    
+</div>
+
+<div style="margin:10px 10px 10px 10px">
+    <div class="card">
+        <div class="card-header" style="text-align:center; text-transform:capitalize"><strong>My Details</h1></strong></div>
+
+        
+        <div class="table-responsive-md" style="margin:10px 10px 10px 10px"> 
                 @forelse($admins as $admin)
                 <p>
                 <div><strong>Account Name:</strong> {{$admin->adminFirstname}} {{$admin->adminLastname}}
@@ -24,5 +27,4 @@
             </div>
         </div>
     </div>
-</div>
 @endsection

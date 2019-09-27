@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Booking;
 use App\Property;
 use App\Parameter;
+use App\Clerk;
 use Auth;
 use DB;
 
@@ -30,13 +31,13 @@ class ClerkPagesController extends Controller
     }
 
     public function details(){
-        $client_id = Auth::user()->clientId;
+        $clerk_id = Auth::user()->clerkId;
 
-        $clients = DB::table('clients')
-        ->where('clientId', '=', $client_id)
+        $clerks = DB::table('clerks')
+        ->where('clerkId', '=', $clerk_id)
         ->get();
 
-        return view('pages.clerk.details')->with('clients', $clients);
+        return view('pages.clerk.details')->with('clerks', $clerks);
     }
 
     public function contact(){

@@ -1,15 +1,18 @@
 @extends('layouts.userapp')
 
 @section('content')
+<div style="margin:10px 10px 10px 10px">
 {{Breadcrumbs::render('bookings')}}
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header" style="text-align:center; text-transform:capitalize"><strong>{{ Auth::user()->clientFirstname }}'s Bookings</strong></div>
+</div>
 
-                <table class="table table-striped">
-                    <thead>
+<div style="margin:10px 10px 10px 10px">
+    <div class="card">
+        <div class="card-header" style="text-align:center; text-transform:capitalize"><strong>Your Bookings Dashboard</h1></strong></div>
+
+        
+        <div class="table-responsive-md" style="margin:10px 10px 10px 10px">
+            <table class="table table-bordered">
+            <thead>
                         <tr style="text-align:center">
                             <th>Address</th>
                             <th>Start Time</th>
@@ -84,5 +87,4 @@
             </div>
         </div>
     </div>
-</div>
 @endsection

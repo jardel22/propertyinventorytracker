@@ -1,18 +1,19 @@
 @extends('layouts.clerkapp')
 
 @section('content')
+<div style="margin:10px 10px 10px 10px">
 {{Breadcrumbs::render('clerkChangePassword')}}
+</div>
 
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header" style="text-align:center; text-transform:capitalize"><strong>My Details</h1></strong>
-                </div>
-    
-                <div style="text-align:center">
+<div style="margin:10px 10px 10px 10px">
+    <div class="card">
+        <div class="card-header" style="text-align:center; text-transform:capitalize"><strong>My Details</h1></strong></div>
+
+        
+        <div class="table-responsive-md" style="margin:10px 10px 10px 10px"> 
+
                 @forelse($clerks as $clerk)
-                <div class="container" style="margin:10px 10px 10px 10px"><span style='color:green'>{{$clerk->clerkFirstname}} {{$clerk->clerkLastname}}</span>, Update your Password</div>
+                <div style="margin:10px 10px 10px 10px"><span style='color:green'>{{$clerk->clerkFirstname}} {{$clerk->clerkLastname}}</span>, Update your Password</div>
                 </div>
 
                 {!! Form::open(['action' => ['ClerkPasswordChangeController@updatePassword'], 'method' => 'POST', 'class' => 'pull-right']) !!}
@@ -42,26 +43,22 @@
 
                             <br>
                             <input type="submit" value="Update Password" class="btn btn-primary" style="float: right">
-                            
+                            <br>
+                            <br>    
                         </div>
 
 
-
-
+                {!! Form::close() !!}
                     </div>
 
                 </div>
-
-                {!! Form::close() !!}
 
                  
             </div>
         </div>
 
-                @empty
-                @endforelse
-            </div>
-        </div>
-    </div>
+    @empty
+    @endforelse
+
 </div>
 @endsection

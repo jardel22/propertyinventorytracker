@@ -28,7 +28,7 @@ class ClerkRegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = 'clerk/';
+    protected $redirectTo = '/clerk';
 
     /**
      * Create a new controller instance.

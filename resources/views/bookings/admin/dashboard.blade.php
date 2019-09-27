@@ -2,8 +2,12 @@
 
 @section('content')
 <div style="margin:10px 10px 10px 10px">
+{{Breadcrumbs::render('adminBookings')}}
+</div>
+
+<div style="margin:10px 10px 10px 10px">
     <div class="card">
-        <div class="card-header" style="text-align:center; text-transform:capitalize"><strong>Bookings Dashboard</h1></strong></div>
+        <div class="card-header" style="text-align:center; text-transform:capitalize"><strong>Admin's Bookings Dashboard</h1></strong></div>
 
         
         <div class="table-responsive-md" style="margin:10px 10px 10px 10px">

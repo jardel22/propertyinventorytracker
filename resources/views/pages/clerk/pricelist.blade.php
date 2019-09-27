@@ -1,19 +1,18 @@
-@extends('layouts.userapp')
+@extends('layouts.clerkapp')
 
 @section('content')
+<div style="margin:10px 10px 10px 10px">
 {{Breadcrumbs::render('clerkPricelist')}}
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header" style="text-align:center; text-transform:capitalize"><strong>Pricelist</h1></strong></div>
-    
-                <div style="margin:10px 10px 10px 10px;text-decoration:underline">
-                <p><strong><mark>INVENTORY REPORT</mark></strong></p>
-                </div>
-                
-                    <table class="table table-bordered">
-                    <thead>
+</div>
+
+<div style="margin:10px 10px 10px 10px">
+    <div class="card">
+        <div class="card-header" style="text-align:center; text-transform:capitalize"><strong>Pricelist</h1></strong></div>
+
+        
+        <div class="table-responsive-md" style="margin:10px 10px 10px 10px">
+            <table class="table table-bordered">
+            <thead>
                     <tr>
                     <th>Property Type</th>
                     <th>Studio</th>
@@ -55,5 +54,4 @@
             </div>
         </div>
     </div>
-</div>
 @endsection
