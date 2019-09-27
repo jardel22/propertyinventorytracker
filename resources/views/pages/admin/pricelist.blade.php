@@ -1,7 +1,7 @@
-@extends('layouts.userapp')
+@extends('layouts.adminapp')
 
 @section('content')
-{{Breadcrumbs::render('pricelist')}}
+{{Breadcrumbs::render('adminPricelist')}}
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">

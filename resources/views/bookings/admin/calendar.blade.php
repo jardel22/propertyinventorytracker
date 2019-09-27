@@ -2,22 +2,17 @@
 @extends('layouts.adminapp')
 
 @section('content')
-<div class="container">
-@if (\Session::has('success'))
-      <div class="alert alert-success">
-        <p>{{ \Session::get('success') }}</p>
-      </div><br />
-     @endif
-   <div class="panel panel-default">
-        <div class="panel-heading">
-            <h2>Approved Bookings</h2>
-        </div>
-        <div class="panel-body" >
+<div style="margin:10px 10px 10px 10px">
+{{Breadcrumbs::render('adminHome')}}
+</div>
+
+<div style="margin:10px 10px 10px 10px">
+    <div class="card">
+        <div class="card-header" style="text-align:center; text-transform:capitalize"><strong>Approved Bookings</h1></strong></div>
+        <div style="margin:10px 10px 10px 10px">          
           <div id='calendar'></div> {{--To show Calendar--}}
             {{-- {!! $calendar->calendar() !!} --}}
-        </div>
-    </div>
-</div>
+        
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js"></script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.1.0/fullcalendar.min.js'></script>
@@ -27,11 +22,14 @@
 {{-- actual script for calendar --}}
 <script>
 $(document).ready(function() {
-    // page is now ready, initialize the calendar...
-  $('#calendar').fullCalendar({
-        // put your options and callbacks here
-  defaultView: 'agendaWeek',
-    events : [
+  var calendar = $('#calendar').fullCalendar({
+      editable:false,
+      header:{
+      left:'prev,next today',
+      center:'title',
+      right:'month,agendaWeek,agendaDay'
+      },
+      events : [
       @foreach($bookings as $booking)
         {
           title : '{{ $booking->clientFirstname . ' ' . $booking->clientLastname }}',
@@ -41,20 +39,20 @@ $(document).ready(function() {
           @endif
         },
       @endforeach
-    ],
-
-    dayClick: function (start, allDay, jsEvent, view) {
-    alert('You clicked me!');
-}
-
+      ],  
+      selectable:true,
+      selectHelper:true,
+      editable:false,
+      
+      
   });
-});
+  });
+
 </script>
 
 
 <br>
 <br>
-<div class="container">
 <table class="table table-striped">
   <thead>
       <tr style="text-align:center">
@@ -69,7 +67,11 @@ $(document).ready(function() {
   
   <tbody>
   @forelse($bookings as $booking)
-  <?php $ldate = date('Y-m-d H:i:s'); ?>
+  {{-- set the timezone to London because the during daylight saving the clocks change. This change is not done automatically within the system without the timezone being set --}}
+  <?php 
+  date_default_timezone_set('Europe/London');
+  $ldate = date('Y-m-d H:i:s'); ?>
+  
   @if ($booking->startTime > $ldate && Auth::user()->clerkId == $booking->clerk_id )
 
   <tr style="text-align:center; background-color:#70AADD; color:white">
@@ -99,6 +101,7 @@ $(document).ready(function() {
 
 
 </table>
+</div>
 </div>
 <br>
 <br>

@@ -9,14 +9,14 @@ use App\Parameter;
 use Auth;
 use DB;
 
-class PagesController extends Controller
+class AdminPagesController extends Controller
 {
     protected $property, $booking, $parameter;
     
     public function __construct()
     {
 
-        $this->middleware('auth:web');
+        $this->middleware('auth:admin');
 
 
         $this->booking = new Booking();
@@ -30,36 +30,34 @@ class PagesController extends Controller
     }
 
     public function details(){
-        $client_id = Auth::user()->clientId;
+        $admin_id = Auth::user()->adminId;
 
-        $clients = DB::table('clients')
-        ->where('clientId', '=', $client_id)
+        $admins = DB::table('admins')
+        ->where('adminId', '=', $admin_id)
         ->get();
 
-        return view('pages.user.details')->with('clients', $clients);
+        return view('pages.admin.details')->with('admins', $admins);
     }
 
     public function contact(){
         $title = 'Contact Us';
-        return view('pages.user.contact')->with('title', $title);
+        return view('pages.admin.contact')->with('title', $title);
     }
 
     public function pricelist(){
         $title = 'Pricelist';
-        return view('pages.user.pricelist')->with('title', $title);
+        return view('pages.admin.pricelist')->with('title', $title);
     }
 
     public function statements(){
-        $client_id = Auth::user()->clientId;
-
+        
         $bookings = DB::table('bookings')
         ->join('clients', 'bookings.client_id', '=', 'clients.clientId')
         ->join('properties', 'bookings.property_id', '=', 'properties.propertyId')
         ->join('parameters', 'properties.propertyId', '=', 'parameters.property_id')
-        ->where('clients.clientId', '=', $client_id)
         ->get();
 
-        return view('pages.user.statements')->with('bookings', $bookings);
+        return view('pages.admin.statements')->with('bookings', $bookings);
     }
 
     public function welcome(){

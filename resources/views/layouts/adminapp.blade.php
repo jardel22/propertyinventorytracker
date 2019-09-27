@@ -74,6 +74,9 @@
                     </li>
                 @endif
             @else
+                {{-- <li class="nav-item">
+                    <a class="nav-link" href="{{route('admin.dashboard')}}">Home</a>
+                </li> --}}
                 <li class="nav-item dropdown">
                     <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                         Bookings<span class="caret"></span>
@@ -89,18 +92,17 @@
                     </div>
 
                 </li>
-
                 <li class="nav-item">
-                    <a class="nav-link" href="/pricelist">Pricelist</a>
+                    <a class="nav-link" href="{{route('admin.pricelist')}}">Pricelist</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/details">My Details</a>
+                    <a class="nav-link" href="{{route('admin.details')}}">My Details</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/contact">Contact Us</a>
+                    <a class="nav-link" href="{{route('admin.contact')}}">Contact Us</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/statements">Statements</a>
+                    <a class="nav-link" href="{{route('admin.statements')}}">Statements</a>
                 </li>
 
                 <li class="nav-item dropdown">

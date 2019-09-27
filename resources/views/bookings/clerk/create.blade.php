@@ -1,12 +1,13 @@
 @extends('layouts.clerkapp')
 
 @section('content')
-<div class="container">
+<div style="margin:10px 10px 10px 10px">
+{{Breadcrumbs::render('clerkCreate')}}
+</div>
+<div style="margin:10px 10px 10px 10px">
     <div class="card">
-        <div class="card-header">Create a Booking</div>
-    </div>
-
-        
+        <div class="card-header" style="text-align:center; text-transform:capitalize"><strong>create a booking</h1></strong></div>
+<div style="margin:10px 10px 10px 10px">
 
     <br>
     {!! Form::open(['action' => 'ClerkBookingsController@store', 'method' => 'POST']) !!}
@@ -121,5 +122,7 @@
 
         {{Form::submit('Submit', ['class'=>'btn btn-primary'])}}
     {!! Form::close() !!}
+</div>
+</div>
 </div>
 @endsection

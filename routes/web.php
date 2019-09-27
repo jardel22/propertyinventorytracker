@@ -11,9 +11,10 @@
 |
 */
 
-Route::get('/details', 'PagesController@details')->name('user.details');
 Route::get('/details/update-password', 'ClientController@password')->name('user.details.password');
 Route::post('/details/update-password', 'ClientController@updatePassword')->name('user.details.updatePassword');
+
+Route::get('/details', 'PagesController@details')->name('user.details');
 
 Route::get('/pricelist', 'PagesController@pricelist')->name('user.pricelist');
 
@@ -22,6 +23,7 @@ Route::get('/statements', 'PagesController@statements')->name('user.statements')
 Route::get('/contact', 'PagesController@contact')->name('user.contact');
 
 Route::get('/welcome', 'PagesController@welcome');
+
 
 Route::get('/uploadfile','UploadFileController@index');
 Route::post('/uploadfile','UploadFileController@showUploadFile');
@@ -54,6 +56,21 @@ Route::prefix('admin')->group(function(){
     Route::patch('/bookings/{booking}', 'AdminBookingsController@update')->name('admin.bookings.update');
     Route::get('/bookings/{booking}/show', 'AdminBookingsController@show')->name('admin.bookings.show');
     Route::get('/', 'AdminBookingsController@calendar')->name('admin.dashboard');
+    
+    Route::get('/details', 'AdminPagesController@details')->name('admin.details');
+
+    Route::get('/pricelist', 'AdminPagesController@pricelist')->name('admin.pricelist');
+
+    Route::get('/statements', 'AdminPagesController@statements')->name('admin.statements');
+
+    Route::get('/contact', 'AdminPagesController@contact')->name('admin.contact');
+
+    Route::get('/details/update-password', 'AdminPasswordChangeController@password')->name('admin.details.password');
+    Route::post('/details/update-password', 'AdminPasswordChangeController@updatePassword')->name('admin.details.updatePassword');
+
+    Route::get('/welcome', 'AdminPagesController@welcome');
+
+
 });
 
 Route::prefix('clerk')->group(function(){
@@ -81,6 +98,18 @@ Route::prefix('clerk')->group(function(){
     Route::get('/bookings/{booking}/show', 'ClerkBookingsController@show')->name('clerk.bookings.show');
     Route::get('/', 'ClerkBookingsController@calendar')->name('clerk.dashboard');  
     
+
+    Route::get('/details', 'ClerkPagesController@details')->name('clerk.details');
+    Route::get('/details/update-password', 'ClerkPasswordChangeController@password')->name('clerk.details.password');
+    Route::post('/details/update-password', 'ClerkPasswordChangeController@updatePassword')->name('clerk.details.updatePassword');
+
+    Route::get('/pricelist', 'ClerkPagesController@pricelist')->name('clerk.pricelist');
+
+    Route::get('/statements', 'ClerkPagesController@statements')->name('clerk.statements');
+
+    Route::get('/contact', 'ClerkPagesController@contact')->name('clerk.contact');
+
+    Route::get('/welcome', 'ClerkPagesController@welcome');
 });
 
 Route::post('bookings/dashboard/toggle-approve', 'BookingsController@approve')->name('bookings.user.dashboard.toggle-approve');

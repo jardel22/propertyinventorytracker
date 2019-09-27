@@ -1,18 +1,19 @@
 @extends('layouts.adminapp')
 
 @section('content')
-<div class="container">
+<div style="margin:10px 10px 10px 10px">
+{{Breadcrumbs::render('adminCreate')}}
+</div>
+<div style="margin:10px 10px 10px 10px">
     <div class="card">
-        <div class="card-header">Create a Booking</div>
-    </div>
-
-        
+        <div class="card-header" style="text-align:center; text-transform:capitalize"><strong>create a booking</h1></strong></div>
+<div style="margin:10px 10px 10px 10px">
 
     <br>
     {!! Form::open(['action' => 'AdminBookingsController@store', 'method' => 'POST']) !!}
         
         <div class="form-group">
-        <label for="clientId"><strong>Assign a Clerk to the Booking</strong></label>
+        <label for="clientId">Select Which Client This Booking is For</label>
         <select name="clientId" id="clientId" class="form-control" title="Assign a Clerk to the Booking">
          
             @foreach ($clientname_array as $data)
@@ -121,5 +122,7 @@
 
         {{Form::submit('Submit', ['class'=>'btn btn-primary'])}}
     {!! Form::close() !!}
+</div>
+</div>
 </div>
 @endsection

@@ -34,11 +34,10 @@ class BookingsController extends Controller
     {
         $client_id = Auth::user()->clientId;
 
-        $book = DB::table('bookings')
+        $bookings = DB::table('bookings')
         ->join('clients', 'bookings.client_id', '=', 'clients.clientId')
         ->join('properties', 'bookings.property_id', '=', 'properties.propertyId')
         ->join('parameters', 'properties.propertyId', '=', 'parameters.property_id')
-        ->where('bookings.bookingId', '=', $bookingId)
         ->where('clients.clientId', '=', $client_id)
         ->get();
         

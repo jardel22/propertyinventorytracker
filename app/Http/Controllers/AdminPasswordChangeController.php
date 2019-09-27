@@ -7,18 +7,18 @@ use Illuminate\Support\Facades\Hash;
 use App\Booking;
 use App\Property;
 use App\Parameter;
-use App\Client;
+use App\Admin;
 use Auth;
 use DB;
 
-class ClientController extends Controller
+class AdminPasswordChangeController extends Controller
 {
     protected $property, $booking, $parameter;
     
     public function __construct()
     {
 
-        $this->middleware('auth:web');
+        $this->middleware('auth:admin');
 
 
         $this->booking = new Booking();
@@ -26,30 +26,16 @@ class ClientController extends Controller
         $this->parameter = new Parameter();
     }
 
-    public function email() 
-    {
-        $client_id = Auth::user()->clientId;
-
-        $clients = DB::table('clients')
-        ->where('clientId', '=', $client_id)
-        ->get();
-
-        return view('pages.user.changeEmail')->with('clients', $clients);
-    }
-
-    public function updateEmail(Request $request)
-    {
-    }
-    
+       
     public function password() 
     {
-        $client_id = Auth::user()->clientId;
+        $admin_id = Auth::user()->adminId;
 
-        $clients = DB::table('clients')
-        ->where('clientId', '=', $client_id)
+        $admins = DB::table('admins')
+        ->where('adminId', '=', $admin_id)
         ->get();
 
-        return view('pages.user.changePassword')->with('clients', $clients);
+        return view('pages.admin.changePassword')->with('admins', $admins);
     }
 
     public function updatePassword(Request $request)
@@ -60,7 +46,7 @@ class ClientController extends Controller
         
         if($newPassword == $confirmPassword && Hash::check($oldPassword, Auth::user()->password)){
             $request->user()->fill(['password' => Hash::make($newPassword)])->save(); //updating password into user table
-            return redirect('/details')->with('success','Password has been updated');
+            return redirect('admin/details')->with('success','Password has been updated');
         }
         
         else if($newPassword !== $confirmPassword){

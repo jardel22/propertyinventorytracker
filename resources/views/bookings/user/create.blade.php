@@ -1,14 +1,15 @@
 @extends('layouts.userapp')
 
 @section('content')
+<div style="margin:10px 10px 10px 10px">
 {{Breadcrumbs::render('create')}}
-<div class="container">
+</div>
+<div style="margin:10px 10px 10px 10px">
     <div class="card">
-        <div class="card-header">Create a Booking</div>
-    </div>
-    <br>
-<?php header('Access-Control-Allow-Origin: *'); ?>
+        <div class="card-header" style="text-align:center; text-transform:capitalize"><strong>create a booking</h1></strong></div>
+<div style="margin:10px 10px 10px 10px">
 
+    <br>
     {!! Form::open(['action' => 'BookingsController@store', 'class' => 'create', 'method' => 'POST']) !!}
         
         <fieldset>
@@ -128,6 +129,8 @@
         {{Form::submit('Submit', ['class'=>'btn btn-primary'])}}
         </fieldset>
     {!! Form::close() !!}
+</div>
+</div>
 </div>
 
 @endsection

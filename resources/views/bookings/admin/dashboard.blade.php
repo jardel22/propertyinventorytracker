@@ -1,15 +1,15 @@
 @extends('layouts.adminapp')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header" style="text-align:center"><strong>Bookings Dashboard</strong></div>
+<div style="margin:10px 10px 10px 10px">
+    <div class="card">
+        <div class="card-header" style="text-align:center; text-transform:capitalize"><strong>Bookings Dashboard</h1></strong></div>
 
-                <table class="table table-striped">
-                    <thead>
-                        <tr style="text-align:center">
+        
+        <div class="table-responsive-md" style="margin:10px 10px 10px 10px">
+            <table class="table table-bordered">
+            <thead>
+                <tr style="text-align:center">
                             <th>Start Time</th>
                             <th>End Time</th>
                             <th>Status</th>
@@ -96,8 +96,6 @@
 
 
                 </table>
-
-            </div>
         </div>
     </div>
 </div>

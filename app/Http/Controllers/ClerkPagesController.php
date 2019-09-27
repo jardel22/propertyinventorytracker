@@ -9,14 +9,14 @@ use App\Parameter;
 use Auth;
 use DB;
 
-class PagesController extends Controller
+class ClerkPagesController extends Controller
 {
     protected $property, $booking, $parameter;
     
     public function __construct()
     {
 
-        $this->middleware('auth:web');
+        $this->middleware('auth:clerk');
 
 
         $this->booking = new Booking();
@@ -36,30 +36,28 @@ class PagesController extends Controller
         ->where('clientId', '=', $client_id)
         ->get();
 
-        return view('pages.user.details')->with('clients', $clients);
+        return view('pages.clerk.details')->with('clients', $clients);
     }
 
     public function contact(){
         $title = 'Contact Us';
-        return view('pages.user.contact')->with('title', $title);
+        return view('pages.clerk.contact')->with('title', $title);
     }
 
     public function pricelist(){
         $title = 'Pricelist';
-        return view('pages.user.pricelist')->with('title', $title);
+        return view('pages.clerk.pricelist')->with('title', $title);
     }
 
     public function statements(){
-        $client_id = Auth::user()->clientId;
-
+        
         $bookings = DB::table('bookings')
         ->join('clients', 'bookings.client_id', '=', 'clients.clientId')
         ->join('properties', 'bookings.property_id', '=', 'properties.propertyId')
         ->join('parameters', 'properties.propertyId', '=', 'parameters.property_id')
-        ->where('clients.clientId', '=', $client_id)
         ->get();
 
-        return view('pages.user.statements')->with('bookings', $bookings);
+        return view('pages.clerk.statements')->with('bookings', $bookings);
     }
 
     public function welcome(){

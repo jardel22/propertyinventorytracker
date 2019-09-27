@@ -2,23 +2,16 @@
 @extends('layouts.userapp')
 
 @section('content')
+<div style="margin:10px 10px 10px 10px">
 {{Breadcrumbs::render('home')}}
-<div class="container">
-  @if (\Session::has('success'))
-      <div class="alert alert-success">
-        <p>{{ \Session::get('success') }}</p>
-      </div><br/>
-  @endif
-  <div class="panel panel-default">
-    <div class="panel-heading">
-        <h2>PropertyInventoryTracker Booking Calendar</h2>
-        <br>
-      </div>
-      <div class="panel-body" >
+</div>
+
+<div style="margin:10px 10px 10px 10px">
+    <div class="card">
+        <div class="card-header" style="text-align:center; text-transform:capitalize"><strong>Property Inventory Tracker Booking Calendar</h1></strong></div>
+        <div style="margin:10px 10px 10px 10px"> 
         <div id='calendar'></div>
-      </div>
-    </div>
-  </div>
+
 
 {{-- scripts used to display the calendar --}}
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
@@ -58,7 +51,6 @@ $(document).ready(function() {
 
 <br>
 <br>
-<div class="container">
 {{-- display a table under the calendar which will have information regarding confirmed bookings --}}
 <table class="table table-striped">
   <thead>
@@ -103,6 +95,7 @@ $(document).ready(function() {
 
 
 </table>
+</div>
 </div>
 <br>
 <br>

@@ -1,7 +1,7 @@
-@extends('layouts.userapp')
+@extends('layouts.clerkapp')
 
 @section('content')
-{{Breadcrumbs::render('changePassword')}}
+{{Breadcrumbs::render('clerkChangePassword')}}
 
 <div class="container">
     <div class="row justify-content-center">
@@ -11,11 +11,11 @@
                 </div>
     
                 <div style="text-align:center">
-                @forelse($clients as $client)
-                <div class="container" style="margin:10px 10px 10px 10px"><span style='color:green;text-transform:capitalize'>{{$client->clientFirstname}} {{$client->clientLastname}}</span>, Update your Password</div>
+                @forelse($clerks as $clerk)
+                <div class="container" style="margin:10px 10px 10px 10px"><span style='color:green'>{{$clerk->clerkFirstname}} {{$clerk->clerkLastname}}</span>, Update your Password</div>
                 </div>
 
-                {!! Form::open(['action' => ['AdminPasswordChangeController@updatePassword'], 'method' => 'POST', 'class' => 'pull-right']) !!}
+                {!! Form::open(['action' => ['ClerkPasswordChangeController@updatePassword'], 'method' => 'POST', 'class' => 'pull-right']) !!}
 
 
                 <div class="container" style="margin:10px 10px 10px 10px" >
